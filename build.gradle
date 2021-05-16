@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-core:5.2.14.RELEASE'
+    implementation 'org.springframework:spring-context:5.2.14.RELEASE'
+    implementation 'org.springframework:spring-jdbc:5.2.14.RELEASE'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+    implementation 'org.projectlombok:lombok:1.18.20'
+
+    testImplementation 'org.assertj:assertj-core:3.18.1'
+    testImplementation 'org.springframework:spring-test:5.2.14.RELEASE'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+test {
+    useJUnitPlatform()
+}
