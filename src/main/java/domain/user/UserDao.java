@@ -67,6 +67,10 @@ public class UserDao {
         rs.next();
         int count = rs.getInt(1);
 
+        rs.close();
+        ps.close();
+        c.close();
+
         return count;
     }
 
@@ -76,6 +80,9 @@ public class UserDao {
         PreparedStatement ps = c.prepareStatement(
                 "delete from users");
         int count = ps.executeUpdate();
+
+        ps.close();
+        c.close();
 
         return count;
     }
