@@ -5,7 +5,12 @@
 
     <import resource="privateContext.xml"/>
 
+    <bean id="jdbcContext" class="domain.JdbcContext">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean id="userDao" class="domain.user.UserDao">
-        <constructor-arg ref="dataSource"/>
+        <constructor-arg name="dataSource" ref="dataSource"/>
+        <constructor-arg name="jdbcContext" ref="jdbcContext"/>
     </bean>
 </beans>

@@ -1,7 +1,5 @@
 package domain.user;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,8 +40,8 @@ public class UserDaoTest {
     @Test
     public void 유저_저장하고_조회한다() throws Exception {
         //given
-        userDao.save(user1);
-        userDao.save(user2);
+        userDao.add(user1);
+        userDao.add(user2);
 
         //when
         User result = userDao.get(user2.getId());
@@ -55,8 +53,8 @@ public class UserDaoTest {
     @Test
     public void 유저_개수_조회한다() throws Exception {
         //given
-        userDao.save(user1);
-        userDao.save(user2);
+        userDao.add(user1);
+        userDao.add(user2);
 
         //when
         int result = userDao.getCount();
@@ -68,8 +66,8 @@ public class UserDaoTest {
     @Test
     public void 유저_전부_삭제한다() throws Exception {
         //given
-        userDao.save(user1);
-        userDao.save(user2);
+        userDao.add(user1);
+        userDao.add(user2);
 
         //when
         userDao.deleteAll();

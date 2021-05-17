@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.JdbcContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -13,22 +14,19 @@ import java.sql.SQLException;
 public class UserDao {
 
     private final DataSource dataSource;
+    private final JdbcContext jdbcContext;
 
-    public int save(User user) throws SQLException {
-        Connection c = dataSource.getConnection();
-
-        PreparedStatement ps = c.prepareStatement(
-                "insert into users (id, name, password) values (?, ?, ?)");
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-
-        int count = ps.executeUpdate();
-
-        ps.close();
-        c.close();
-
-        return count;
+    public void add(User user) throws SQLException {
+        jdbcContext.workWithStatementStrategy(
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            "insert into users(id, name, password) values (?, ?, ?)");
+                    ps.setString(1, user.getId());
+                    ps.setString(2, user.getName());
+                    ps.setString(3, user.getPassword());
+                    return ps;
+                }
+        );
     }
 
     public User get(String id) throws SQLException {
@@ -74,16 +72,7 @@ public class UserDao {
         return count;
     }
 
-    public int deleteAll() throws SQLException {
-        Connection c = dataSource.getConnection();
-
-        PreparedStatement ps = c.prepareStatement(
-                "delete from users");
-        int count = ps.executeUpdate();
-
-        ps.close();
-        c.close();
-
-        return count;
+    public void deleteAll() throws SQLException {
+        jdbcContext.executeQuery("delete from users");
     }
 }
