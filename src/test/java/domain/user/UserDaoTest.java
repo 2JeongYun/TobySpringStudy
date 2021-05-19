@@ -8,7 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.SQLException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,7 +23,7 @@ public class UserDaoTest {
     private User user2;
 
     @BeforeEach
-    public void setUp() throws SQLException {
+    public void setUp() {
         userDao.deleteAll();
         user1 = User.builder()
                 .id("id1")
@@ -38,7 +38,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void 유저_저장하고_조회한다() throws Exception {
+    public void 유저_저장하고_조회한다() {
         //given
         userDao.add(user1);
         userDao.add(user2);
@@ -51,7 +51,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void 유저_개수_조회한다() throws Exception {
+    public void 유저_개수_조회한다() {
         //given
         userDao.add(user1);
         userDao.add(user2);
@@ -64,7 +64,32 @@ public class UserDaoTest {
     }
 
     @Test
-    public void 유저_전부_삭제한다() throws Exception {
+    public void 유저_전부_조회한다() {
+        //given
+        userDao.add(user1);
+        userDao.add(user2);
+
+        //when
+        List<User> result = userDao.getAll();
+
+        //then
+        assertThat(result).hasSize(2);
+        assertThat(result).usingRecursiveFieldByFieldElementComparator().containsExactly(user1, user2);
+    }
+
+    @Test
+    public void 유저_전부_조회_결과_없을때_빈리스트() {
+        //given
+
+        //when
+        List<User> result = userDao.getAll();
+
+        //then
+        assertThat(result).hasSize(0);
+    }
+
+    @Test
+    public void 유저_전부_삭제한다() {
         //given
         userDao.add(user1);
         userDao.add(user2);
@@ -78,7 +103,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void 유저_조회_결과_없을때_예외발생() throws Exception {
+    public void 유저_조회_결과_없을때_예외발생() {
         //given
         assertThat(userDao.getCount()).isEqualTo(0);
 
