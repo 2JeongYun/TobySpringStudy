@@ -9,7 +9,7 @@
         <constructor-arg name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="userDao" class="domain.user.UserDao">
+    <bean id="userDao" class="domain.user.UserDaoJdbc">
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 </beans>

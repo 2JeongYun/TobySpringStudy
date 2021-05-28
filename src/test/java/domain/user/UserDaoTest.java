@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -112,6 +113,23 @@ public class UserDaoTest {
         //then
         assertThrows(EmptyResultDataAccessException.class, () -> {
             userDao.get("unknown_id");
+        });
+    }
+
+    @Test
+    public void 중복된_키_등록시_예외발생() throws Exception {
+        //given
+        userDao.add(user1);
+
+        //when
+
+        //then
+        assertThrows(DuplicateKeyException.class, () -> {
+            userDao.add(User.builder()
+                .id(user1.getId())
+                .name("name2")
+                .password("password2")
+                .build());
         });
     }
 }
