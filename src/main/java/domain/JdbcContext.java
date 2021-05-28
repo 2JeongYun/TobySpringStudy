@@ -1,6 +1,6 @@
 package domain;
 
-import domain.user.userinterface.StatementStrategy;
+import domain.user.StatementStrategy;
 import lombok.RequiredArgsConstructor;
 
 import javax.sql.DataSource;

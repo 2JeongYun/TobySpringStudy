@@ -1,4 +1,4 @@
-package domain.user.userinterface;
+package domain.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
