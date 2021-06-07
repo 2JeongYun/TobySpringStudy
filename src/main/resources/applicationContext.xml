@@ -12,4 +12,8 @@
     <bean id="userDao" class="domain.user.UserDaoJdbc">
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+
+    <bean id="userService" class="service.UserService">
+        <constructor-arg name="userDao" ref="userDao"/>
+    </bean>
 </beans>

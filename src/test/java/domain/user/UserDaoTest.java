@@ -30,11 +30,17 @@ public class UserDaoTest {
                 .id("id1")
                 .name("name1")
                 .password("password1")
+                .level(Level.BASIC)
+                .login(1)
+                .recommend(1)
                 .build();
         user2 = User.builder()
                 .id("id2")
                 .name("name2")
                 .password("password2")
+                .level(Level.SILVER)
+                .login(40)
+                .recommend(3)
                 .build();
     }
 
@@ -129,7 +135,31 @@ public class UserDaoTest {
                 .id(user1.getId())
                 .name("name2")
                 .password("password2")
+                .level(Level.SILVER)
+                .login(40)
+                .recommend(2)
                 .build());
         });
+    }
+
+    @Test
+    public void 유저_수정한다() throws Exception {
+        //given
+        userDao.add(user1);
+        userDao.add(user2);
+        user1.setName("변경된 이름");
+        user1.setLevel(Level.GOLD);
+        user1.setLogin(1000);
+        user1.setRecommend(999);
+
+        //when
+        userDao.update(user1);
+
+        //then
+        User result = userDao.get(user1.getId());
+        assertThat(result).usingRecursiveComparison().isEqualTo(user1);
+        assertThat(user2)
+                .usingRecursiveComparison()
+                .isEqualTo(userDao.get(user2.getId()));
     }
 }
