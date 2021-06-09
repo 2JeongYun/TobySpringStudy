@@ -5,6 +5,9 @@ import domain.user.User;
 import domain.user.UserDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
@@ -16,13 +19,22 @@ public class UserService {
     public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 
     private final UserDao userDao;
+    private final PlatformTransactionManager transactionManager;
 
     public void upgradeLevels() {
-        List<User> users = userDao.getAll();
-        for (User user : users) {
-            if (canUpgradeLevel(user)) {
-                upgradeLevel(user);
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            List<User> users = userDao.getAll();
+            for (User user : users) {
+                if (canUpgradeLevel(user)) {
+                    upgradeLevel(user);
+                }
             }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
         }
     }
 

@@ -13,7 +13,12 @@
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean id="userService" class="service.UserService">
         <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="transactionManager" ref="transactionManager"/>
     </bean>
 </beans>

@@ -37,6 +37,7 @@ public class UserServiceTest {
                 .id("1")
                 .name("name1")
                 .password("password1")
+                .email("email1")
                 .login(MIN_LOGIN_FOR_SILVER - 1)
                 .recommend(10)
                 .level(Level.BASIC)
@@ -45,6 +46,7 @@ public class UserServiceTest {
                 .id("2")
                 .name("name2")
                 .password("password2")
+                .email("email2")
                 .login(MIN_LOGIN_FOR_SILVER)
                 .recommend(10)
                 .level(Level.BASIC)
@@ -53,6 +55,7 @@ public class UserServiceTest {
                 .id("3")
                 .name("name3")
                 .password("password3")
+                .email("email3")
                 .login(51)
                 .recommend(MIN_RECOMMEND_FOR_GOLD)
                 .level(Level.SILVER)
@@ -61,6 +64,7 @@ public class UserServiceTest {
                 .id("4")
                 .name("name4")
                 .password("password4")
+                .email("email4")
                 .login(51)
                 .recommend(30)
                 .level(Level.GOLD)
@@ -93,6 +97,7 @@ public class UserServiceTest {
                 .id("id")
                 .name("name")
                 .password("password")
+                .email("email")
                 .recommend(0)
                 .login(0)
                 .build();
@@ -103,7 +108,7 @@ public class UserServiceTest {
 
         //then
         checkLevel(userWithLevel, false);
-        assertThat(userDao.get(userWithoutLevel.getId()))
+        assertThat(userDao.get(userWithoutLevel.getId()).getLevel())
                 .isEqualTo(userWithoutLevel.getLevel());
     }
 
