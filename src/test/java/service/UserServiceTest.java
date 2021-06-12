@@ -19,8 +19,11 @@ import static service.UserService.MIN_LOGIN_FOR_SILVER;
 import static service.UserService.MIN_RECOMMEND_FOR_GOLD;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(locations = {"/applicationContext.xml", "/testContext.xml"})
 public class UserServiceTest {
+
+    @Autowired
+    private MockMailSender mailSender;
 
     @Autowired
     private UserService userService;
@@ -73,7 +76,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void 등업_테스트() throws Exception {
+    public void 등업_테스트() {
         //given
         for (User user : users) {
             userDao.add(user);
@@ -87,10 +90,11 @@ public class UserServiceTest {
         checkLevel(users.get(1), true);
         checkLevel(users.get(2), true);
         checkLevel(users.get(3), false);
+        assertThat(mailSender.getRequests()).hasSize(2);
     }
 
     @Test
-    public void 유저_등록할때_등급_설정한다() throws Exception {
+    public void 유저_등록할때_등급_설정한다() {
         //given
         User userWithLevel = users.get(3);
         User userWithoutLevel = User.builder()
