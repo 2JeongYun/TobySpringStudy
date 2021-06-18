@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'idea'
 }
 
 group 'org.example'
@@ -21,7 +22,7 @@ dependencies {
 
     testImplementation 'org.assertj:assertj-core:3.18.1'
     testImplementation 'org.springframework:spring-test:5.2.14.RELEASE'
-    testImplementation 'org.mockito:mockito-core:3.11.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.11.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 
