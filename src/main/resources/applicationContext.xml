@@ -21,9 +21,13 @@
         <property name="host" value="mail.server.com"/>
     </bean>
 
-    <bean id="userService" class="service.UserService">
+    <bean id="userServiceImpl" class="service.UserServiceImpl">
         <constructor-arg name="userDao" ref="userDao"/>
-        <constructor-arg name="transactionManager" ref="transactionManager"/>
         <constructor-arg name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean id="userService" class="service.UserServiceTx">
+        <constructor-arg name="userService" ref="userServiceImpl"/>
+        <constructor-arg name="transactionManager" ref="transactionManager"/>
     </bean>
 </beans>
