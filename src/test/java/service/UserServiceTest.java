@@ -34,7 +34,7 @@ public class UserServiceTest {
     private MailSender mockMailSender;
 
     @InjectMocks
-    private UserServiceImpl userService;
+    private UserService userService;
 
     private List<User> users;
 
