@@ -58,7 +58,11 @@ public class UserServiceTransactionTest {
                 }
         );
         UserServiceImpl userServiceImpl = new UserServiceImpl(userDaoProxy, mock(MailSender.class));
-        userService = new UserServiceTx(userServiceImpl, transactionManager);
+        userService = (UserService) Proxy.newProxyInstance(
+                getClass().getClassLoader(),
+                new Class[] {UserService.class},
+                new TransactionHandler(userServiceImpl, transactionManager, "upgradeLevels")
+        );
 
         User user1 = User.builder()
                 .id("1")
