@@ -26,8 +26,10 @@
         <constructor-arg name="mailSender" ref="mailSender"/>
     </bean>
 
-    <bean id="userService" class="service.UserServiceTx">
-        <constructor-arg name="userService" ref="userServiceImpl"/>
+    <bean id="userService" class="service.TransactionProxyFactoryBean">
+        <constructor-arg name="target" ref="userServiceImpl"/>
+        <constructor-arg name="serviceInterface" value="service.UserService"/>
         <constructor-arg name="transactionManager" ref="transactionManager"/>
+        <constructor-arg name="pattern" value="upgradeLevels"/>
     </bean>
 </beans>
